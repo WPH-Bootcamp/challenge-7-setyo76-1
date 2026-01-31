@@ -38,107 +38,97 @@ const Footer: React.FC<FooterProps> = () => {
         router.push('/profile?tab=orders');
         break;
       case 'FAQ':
+        // You can add FAQ page route here when available
+        router.push('/category/all');
+        break;
       case 'Contact Us':
-        // Leave as is - no navigation
+        // You can add Contact page route here when available
+        router.push('/category/all');
         break;
       default:
         break;
     }
   };
+
+  const socialLinks = [
+    { name: 'Facebook', icon: facebookIcon, url: 'https://facebook.com' },
+    { name: 'Instagram', icon: instagramIcon, url: 'https://instagram.com' },
+    { name: 'LinkedIn', icon: linkedinIcon, url: 'https://linkedin.com' },
+    { name: 'TikTok', icon: tiktokIcon, url: 'https://tiktok.com' },
+  ];
+
+  const exploreItems = [
+    { name: 'All Food', filter: null },
+    { name: 'Nearby', filter: 'nearby' },
+    { name: 'Discount', filter: 'discount' },
+    { name: 'Best Seller', filter: 'bestseller' },
+    { name: 'Delivery', filter: 'delivery' },
+    { name: 'Lunch', filter: 'lunch' },
+  ];
+
+  const helpItems = [
+    'How to Order',
+    'Payment Methods',
+    'Track My Order',
+    'FAQ',
+    'Contact Us',
+  ];
+
   return (
     <footer className='bg-[#0A0D12] text-white py-10 md:py-20 px-4 md:px-30'>
       <div className='max-w-[393px] md:max-w-6xl mx-auto'>
         <div className='flex flex-col md:grid md:grid-cols-3 gap-8 md:gap-16'>
           {/* Company Info */}
           <div className='space-y-6 md:space-y-10'>
-            <div className='flex items-center gap-4'>
-              <div className="relative w-10 h-10 md:w-10 md:h-10">
-                 <Image
+            {/* Logo */}
+            <button
+              onClick={() => router.push('/')}
+              className='flex items-center gap-4 group cursor-pointer bg-transparent border-none p-0 transition-transform duration-200 hover:scale-105'
+            >
+              <div className='relative w-10 h-10 md:w-10 md:h-10'>
+                <Image
                   src={redLogo}
                   alt='Foody Logo'
                   fill
                   className='object-contain'
-                  sizes="40px"
+                  sizes='40px'
                 />
               </div>
-              <span className='text-2xl md:text-display-md text-white font-nunito font-extrabold leading-[42px]'>
+              <span className='text-2xl md:text-display-md text-white font-nunito font-extrabold leading-[42px] group-hover:text-red-500 transition-colors duration-200'>
                 Foody
               </span>
-            </div>
+            </button>
 
+            {/* Description */}
             <p className='text-sm md:text-md-regular text-[#FDFDFD] leading-7 md:leading-relaxed font-nunito font-normal tracking-[-0.02em] max-w-[361px]'>
-              Enjoy homemade flavors & {`chef's`} signature dishes, freshly prepared
-              every day. Order online or visit our nearest branch.
+              Enjoy homemade flavors & {`chef's`} signature dishes, freshly
+              prepared every day. Order online or visit our nearest branch.
             </p>
 
+            {/* Social Media */}
             <div className='space-y-4'>
               <h4 className='text-sm md:text-md-extrabold text-[#FDFDFD] font-nunito font-bold leading-7'>
                 Follow on Social Media
               </h4>
               <div className='flex gap-3'>
-                {/* Facebook */}
-                <a
-                  href='https://facebook.com'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='w-10 h-10 border border-[#252B37] rounded-full flex items-center justify-center hover:bg-gray-800 cursor-pointer transition-colors'
-                >
-                  <Image
-                    src={facebookIcon}
-                    alt='Facebook'
-                    width={20}
-                    height={20}
-                    className='w-5 h-5'
-                  />
-                </a>
-
-                {/* Instagram */}
-                <a
-                  href='https://instagram.com'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='w-10 h-10 border border-[#252B37] rounded-full flex items-center justify-center hover:bg-gray-800 cursor-pointer transition-colors'
-                >
-                  <Image
-                    src={instagramIcon}
-                    alt='Instagram'
-                    width={20}
-                    height={20}
-                    className='w-5 h-5'
-                  />
-                </a>
-
-                {/* LinkedIn */}
-                <a
-                  href='https://linkedin.com'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='w-10 h-10 border border-[#252B37] rounded-full flex items-center justify-center hover:bg-gray-800 cursor-pointer transition-colors'
-                >
-                  <Image
-                    src={linkedinIcon}
-                    alt='LinkedIn'
-                    width={20}
-                    height={20}
-                    className='w-5 h-5'
-                  />
-                </a>
-
-                {/* TikTok */}
-                <a
-                  href='https://tiktok.com'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='w-10 h-10 border border-[#252B37] rounded-full flex items-center justify-center hover:bg-gray-800 cursor-pointer transition-colors'
-                >
-                  <Image
-                    src={tiktokIcon}
-                    alt='TikTok'
-                    width={20}
-                    height={20}
-                    className='w-5 h-5'
-                  />
-                </a>
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='w-10 h-10 border border-[#252B37] rounded-full flex items-center justify-center hover:bg-red-500 hover:border-red-500 cursor-pointer transition-all duration-300 hover:scale-110 group'
+                    aria-label={social.name}
+                  >
+                    <Image
+                      src={social.icon}
+                      alt={social.name}
+                      width={20}
+                      height={20}
+                      className='w-5 h-5 transition-transform duration-300 group-hover:scale-110'
+                    />
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -151,20 +141,15 @@ const Footer: React.FC<FooterProps> = () => {
                 Explore
               </h4>
               <div className='space-y-3'>
-                {[
-                  { name: 'All Food', filter: null },
-                  { name: 'Nearby', filter: 'nearby' },
-                  { name: 'Discount', filter: 'discount' },
-                  { name: 'Best Seller', filter: 'bestseller' },
-                  { name: 'Delivery', filter: 'delivery' },
-                  { name: 'Lunch', filter: 'lunch' },
-                ].map((item) => (
+                {exploreItems.map((item) => (
                   <button
                     key={item.name}
                     onClick={() => handleCategoryClick(item.filter)}
-                    className='block text-sm md:text-md-regular text-[#FDFDFD] hover:text-white text-left transition-colors font-nunito font-normal leading-7 tracking-[-0.02em]'
+                    className='block text-sm md:text-md-regular text-[#FDFDFD] hover:text-red-500 text-left transition-all duration-200 font-nunito font-normal leading-7 tracking-[-0.02em] cursor-pointer bg-transparent border-none p-0 hover:translate-x-1 w-full group'
                   >
-                    {item.name}
+                    <span className='inline-block group-hover:scale-105 transition-transform duration-200'>
+                      {item.name}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -176,37 +161,17 @@ const Footer: React.FC<FooterProps> = () => {
                 Help
               </h4>
               <div className='space-y-3'>
-                {[
-                  'How to Order',
-                  'Payment Methods',
-                  'Track My Order',
-                  'FAQ',
-                  'Contact Us',
-                ].map((item) => {
-                  const isNavigable = [
-                    'How to Order',
-                    'Payment Methods',
-                    'Track My Order',
-                  ].includes(item);
-
-                  return isNavigable ? (
-                    <button
-                      key={item}
-                      onClick={() => handleHelpClick(item)}
-                      className='block text-sm md:text-md-regular text-[#FDFDFD] hover:text-white text-left transition-colors font-nunito font-normal leading-7 tracking-[-0.02em]'
-                    >
+                {helpItems.map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => handleHelpClick(item)}
+                    className='block text-sm md:text-md-regular text-[#FDFDFD] hover:text-red-500 text-left transition-all duration-200 font-nunito font-normal leading-7 tracking-[-0.02em] cursor-pointer bg-transparent border-none p-0 hover:translate-x-1 w-full group'
+                  >
+                    <span className='inline-block group-hover:scale-105 transition-transform duration-200'>
                       {item}
-                    </button>
-                  ) : (
-                    <a
-                      key={item}
-                      href='#'
-                      className='block text-sm md:text-md-regular text-[#FDFDFD] hover:text-white font-nunito font-normal leading-7 tracking-[-0.02em]'
-                    >
-                      {item}
-                    </a>
-                  );
-                })}
+                    </span>
+                  </button>
+                ))}
               </div>
             </div>
           </div>
