@@ -1,16 +1,33 @@
+/**
+ * Hero Section Component with Search Suggestions
+ * Main landing section with functional search bar
+ */
+
+'use client';
+
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSearchQuery } from '@/features/filters/store/filtersSlice';
+import { useRestaurantSearch } from '@/shared/hooks/useRestaurantSearch';
 import SearchBar from './SearchBar';
 import bgMainpage from '@/assets/images/bg-mainpage.png';
+import type { RootState } from '@/app/store';
 
-interface HeroSectionProps {
-  searchQuery: string;
-  onSearchChange: (query: string) => void;
-}
+const HeroSection: React.FC = () => {
+  const dispatch = useDispatch();
+  
+  // Get search query from Redux state
+  const searchQuery = useSelector(
+    (state: RootState) => state.filters.searchQuery
+  );
 
-const HeroSection: React.FC<HeroSectionProps> = ({
-  searchQuery,
-  onSearchChange,
-}) => {
+  // Use the search hook to get suggestions
+  const { suggestions, isLoading } = useRestaurantSearch(searchQuery);
+
+  const handleSearchChange = (query: string) => {
+    dispatch(setSearchQuery(query));
+  };
+
   return (
     <div className='relative h-[648px] md:hero-height' style={{ zIndex: 1 }}>
       {/* Background Image */}
@@ -41,14 +58,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             Search and refine your choice to discover the perfect restaurant.
           </p>
 
-          {/* Search Bar */}
+          {/* Search Bar with Suggestions */}
           <SearchBar
             searchQuery={searchQuery}
-            onSearchChange={onSearchChange}
+            onSearchChange={handleSearchChange}
+            suggestions={suggestions}
+            isLoading={isLoading}
+            showSuggestions={true}
           />
         </div>
       </div>
     </div>
   );
 };
+
 export default HeroSection;

@@ -1,10 +1,37 @@
 /**
  * Redux slice for Filters & Search
- * Handles client-side filter state for menu items
+ * Handles client-side filter state for menu items and restaurants
  */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { FilterState, SortOption } from '../types';
+
+// Types
+export type SortOption = 
+  | 'name-asc' 
+  | 'name-desc' 
+  | 'rating-asc' 
+  | 'rating-desc' 
+  | 'distance-asc' 
+  | 'distance-desc'
+  | 'price-asc'
+  | 'price-desc';
+
+export interface FilterState {
+  searchQuery: string;
+  selectedCategory: string;
+  sortBy: SortOption;
+  sortOrder?: 'asc' | 'desc';
+  priceRange: {
+    min: number;
+    max: number;
+  };
+  location?: string;
+  // CategoryPage specific filters
+  distance: string[];
+  priceMin: string;
+  priceMax: string;
+  rating: string[];
+}
 
 // Initial state with proper typing
 const initialState: FilterState = {
@@ -80,7 +107,7 @@ const filtersSlice = createSlice({
     clearFilters: (state) => {
       state.searchQuery = '';
       state.selectedCategory = '';
-      state.sortBy = 'name';
+      state.sortBy = 'name-asc';
       state.sortOrder = 'asc';
       state.priceRange = { min: 0, max: 1000 };
       state.location = undefined;
