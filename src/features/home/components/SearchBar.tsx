@@ -188,9 +188,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
                       <div className='flex items-center gap-4'>
                         {/* Restaurant Image */}
                         <div className='relative w-16 h-16 rounded-2xl overflow-hidden flex-shrink-0 bg-gradient-to-br from-gray-100 to-gray-200 shadow-sm group-hover:shadow-md transition-shadow duration-200'>
-                          {restaurant.imageUrl ? (
+                          {restaurant.imageUrl || restaurant.images?.[0] || restaurant.logo ? (
                             <img
-                              src={restaurant.imageUrl}
+                              src={restaurant.imageUrl || restaurant.images?.[0] || restaurant.logo || ''}
                               alt={restaurant.name}
                               className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-300'
                             />
@@ -212,11 +212,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
                           
                           {/* Rating and Distance */}
                           <div className='flex items-center gap-3 mb-1.5'>
-                            {restaurant.rating && (
+                            {(restaurant.rating || restaurant.star) && (
                               <div className='flex items-center gap-1.5 bg-yellow-50 px-2.5 py-1 rounded-lg'>
                                 <Star className='w-3.5 h-3.5 fill-yellow-400 text-yellow-400' />
                                 <span className='text-sm font-semibold text-yellow-700'>
-                                  {restaurant.rating.toFixed(1)}
+                                  {(restaurant.rating || restaurant.star || 0).toFixed(1)}
                                 </span>
                               </div>
                             )}
@@ -230,10 +230,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
                             )}
                           </div>
 
-                          {/* Address */}
-                          {restaurant.address && (
+                          {/* Address or Place */}
+                          {(restaurant.place) && (
                             <p className='text-xs text-gray-500 truncate font-medium'>
-                              {restaurant.address}
+                              {restaurant.place}
                             </p>
                           )}
                         </div>
@@ -271,7 +271,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 }}
                 className='w-full text-center py-3 px-4 rounded-xl font-semibold text-red-600 hover:text-white bg-white hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 border-2 border-red-200 hover:border-transparent transition-all duration-300 shadow-sm hover:shadow-md'
               >
-                View all results for "{searchQuery}"
+                View all results for &quot;{searchQuery}&quot;
               </button>
             </div>
           )}

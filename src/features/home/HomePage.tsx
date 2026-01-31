@@ -10,6 +10,8 @@ import { useCategoriesQuery } from '@/shared/api/queries/categories';
 import { useGeolocation } from '@/shared/hooks/useGeolocation';
 import { getRestaurantDistance } from '@/shared/utils/distance';
 import type { Restaurant } from '@/shared/types';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/app/store';
 
 // Import new components
 import HeroSection from './components/HeroSection';
@@ -20,9 +22,13 @@ const HomePage: React.FC = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
   const [originalMode] = useState<'login' | 'register'>('login');
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const router = useRouter();
+
+  // Get search query from Redux state instead of local state
+  const searchQuery = useSelector(
+    (state: RootState) => state.filters.searchQuery
+  );
 
   // Pagination state
   const [allRestaurants, setAllRestaurants] = useState<Restaurant[]>([]);
@@ -297,8 +303,8 @@ const HomePage: React.FC = () => {
 
   return (
     <div className='font-nunito'>
-      {/* Hero Section with Search */}
-      <HeroSection searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+      {/* Hero Section with Search - NO PROPS NEEDED, uses Redux internally */}
+      <HeroSection />
 
       {/* Categories Section */}
       <CategorySection

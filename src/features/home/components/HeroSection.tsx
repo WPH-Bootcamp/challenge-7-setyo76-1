@@ -41,8 +41,11 @@ const HeroSection: React.FC = () => {
 
       {/* Gradient Overlay */}
       <div
-        className='absolute -top-16 md:-top-20 left-0 right-0 bottom-0 hero-gradient'
-        style={{ zIndex: 2 }}
+        className='absolute -top-16 md:-top-20 left-0 right-0 bottom-0'
+        style={{ 
+          zIndex: 2,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 100%)'
+        }}
       />
 
       {/* Hero Content */}
